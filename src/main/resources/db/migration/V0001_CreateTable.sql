@@ -1,0 +1,7 @@
+CREATE TABLE products (
+  id SERIAL NOT NULL,
+  name VARCHAR NOT NULL,
+  price BIGINT NOT NULL,
+  score BIGINT NOT NULL,
+  image VARCHAR(255)
+);
