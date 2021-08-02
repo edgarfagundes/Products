@@ -17,28 +17,34 @@ public class ProductService {
     @Autowired
     ProductRepository productRepository;
 
+    //Metodo de busca
     public Page<Product> findAll(Pageable pageable){
         return productRepository.findAll(pageable);
     }
 
+    //Metodo de busca em ordem crescente
     public List<Product> findByScoreAsc(Pageable pageable){
          List<Product> product = (List<Product>) productRepository.findAll(Sort.by(Sort.Direction.ASC, "score"));
          return product;
     }
 
+    //Metodo de busca em ordem decrescente
     public List<Product> findByScoreDesc(Pageable pageable){
         List<Product> product = (List<Product>) productRepository.findAll(Sort.by(Sort.Direction.DESC, "score"));
         return product;
     }
 
+    //Metodo para salvar produto
     public Optional<Product> save(Product product) {
         return Optional.of((Product) productRepository.save(product));
     }
 
+    //Metodo de busca pelo ID
     public Optional<Product> findById(long id) {
         return productRepository.findById(id);
     }
 
+    //Metodo de exclusão de produto por ID
     public Optional<Void> deleteById(long id) {
         productRepository.deleteById(id);
          return null;

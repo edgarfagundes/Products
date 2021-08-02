@@ -19,6 +19,7 @@ public class ProductController{
     @Autowired
     ProductService productService;
 
+    //Listar todos os produtos
     @GetMapping
     public ResponseEntity<Page<Product>> listProducts(Pageable pageable){
         Page<Product> products = productService.findAll(pageable);
@@ -29,6 +30,7 @@ public class ProductController{
         }
     }
 
+    //Listar produto por ID
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Product>> listProduct(@PathVariable(value = "id")long id) {
         Optional<Product> product = productService.findById(id);
@@ -39,6 +41,7 @@ public class ProductController{
         }
     }
 
+    //Listar produto por score (popularidade) em ordem crescente
     @GetMapping("/scoreAsc")
     public ResponseEntity<List<Product>> findByScoreAsc(Pageable pageable){
         List<Product> productAsc = (List<Product>) productService.findByScoreAsc(pageable);
@@ -49,6 +52,8 @@ public class ProductController{
        }
 
     }
+
+    //Listar produto por score (popularidade) em ordem decrescente
     @GetMapping("/scoreDesc")
     public ResponseEntity<List<Product>> findByScoreDesc(Pageable pageable){
         List<Product> productDesc = (List<Product>) productService.findByScoreDesc(pageable);
@@ -60,12 +65,14 @@ public class ProductController{
 
     }
 
+    //Adicionar produtos
     @PostMapping
     public ResponseEntity<Optional<Product>> addProduct(@RequestBody Product product){
         Optional<Product> productAdd = productService.save(product);
         return new ResponseEntity<Optional<Product>>(productAdd, HttpStatus.CREATED);
     }
 
+    //Alterar produtos
     @PutMapping("/{id}")
     public ResponseEntity<Optional<Product>> updateProduct(@RequestBody Product product,@PathVariable(value = "id") long id ){
         Optional<Product> productId = productService.findById(id);
@@ -76,6 +83,8 @@ public class ProductController{
             return new ResponseEntity<Optional<Product>>(productUp, HttpStatus.OK);
         }
     }
+
+    //Deletar produtos
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable(value = "id")long id){
         Optional<Void> productId = productService.deleteById(id);
