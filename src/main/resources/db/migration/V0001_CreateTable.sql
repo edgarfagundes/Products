@@ -1,7 +1,7 @@
 CREATE TABLE products (
   id SERIAL NOT NULL,
-  name VARCHAR NOT NULL,
+  name VARCHAR(255) NOT NULL,
   price BIGINT NOT NULL,
   score BIGINT NOT NULL,
-  image VARCHAR(255)
+  image VARCHAR(255) NOT NULL
 );

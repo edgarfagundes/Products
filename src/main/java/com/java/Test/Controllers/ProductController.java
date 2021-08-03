@@ -23,8 +23,9 @@ public class ProductController{
     @GetMapping
     public ResponseEntity<Page<Product>> listProducts(Pageable pageable){
         Page<Product> products = productService.findAll(pageable);
-        if (products.isEmpty()){
+        if (!products.isEmpty()){
             return new ResponseEntity<Page<Product>>(products, HttpStatus.OK);
+
     }else{
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
@@ -38,6 +39,36 @@ public class ProductController{
             return new ResponseEntity<Optional<Product>>(product, HttpStatus.OK);
         } else {
             return  new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/alphabet")
+    public ResponseEntity<List<Product>> findByAlphabetAsc(Pageable pageable) {
+        List<Product> productAlpha = (List<Product>) productService.findByAlphabet(pageable);
+        if (!productAlpha.isEmpty()) {
+            return new ResponseEntity<List<Product>>(productAlpha, HttpStatus.ACCEPTED);
+        } else {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/priceAsc")
+    public ResponseEntity<List<Product>> findByPriceAsc(Pageable pageable) {
+        List<Product> productPriceAsc = (List<Product>) productService.findByPriceAsc(pageable);
+        if (!productPriceAsc.isEmpty()) {
+            return new ResponseEntity<List<Product>>(productPriceAsc, HttpStatus.ACCEPTED);
+        } else {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/priceDesc")
+    public ResponseEntity<List<Product>> findByPriceDesc(Pageable pageable) {
+        List<Product> productPriceDesc = (List<Product>) productService.findByPriceDesc(pageable);
+        if (!productPriceDesc.isEmpty()) {
+            return new ResponseEntity<List<Product>>(productPriceDesc, HttpStatus.ACCEPTED);
+        } else {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -84,16 +115,16 @@ public class ProductController{
         }
     }
 
+
     //Deletar produtos
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable(value = "id")long id){
-        Optional<Void> productId = productService.deleteById(id);
-        if (productId.isPresent()){
-             new ResponseEntity<Optional<Void>>(productId, HttpStatus.NO_CONTENT);
+        Optional<Product> productId = productService.deleteById(id);
+        if (productService.existById(id)){
+            new ResponseEntity(productId, HttpStatus.NO_CONTENT);
         }else{
-           return new ResponseEntity(HttpStatus.NOT_FOUND);
+            new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         return null;
     }
-
-}
+        }
