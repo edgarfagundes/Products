@@ -42,6 +42,7 @@ public class ProductController{
         }
     }
 
+    //Listar produto por ordem alfabética
     @GetMapping("/alphabet")
     public ResponseEntity<List<Product>> findByAlphabetAsc(Pageable pageable) {
         List<Product> productAlpha = (List<Product>) productService.findByAlphabet(pageable);
@@ -52,6 +53,7 @@ public class ProductController{
         }
     }
 
+    //Listar produto por preço decrescente
     @GetMapping("/priceAsc")
     public ResponseEntity<List<Product>> findByPriceAsc(Pageable pageable) {
         List<Product> productPriceAsc = (List<Product>) productService.findByPriceAsc(pageable);
@@ -62,6 +64,7 @@ public class ProductController{
         }
     }
 
+    //Listar produto por preço decrescente
     @GetMapping("/priceDesc")
     public ResponseEntity<List<Product>> findByPriceDesc(Pageable pageable) {
         List<Product> productPriceDesc = (List<Product>) productService.findByPriceDesc(pageable);
